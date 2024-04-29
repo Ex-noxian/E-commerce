@@ -45,11 +45,12 @@ if(isset($_POST['submit'])){
 
    <!-- custom css file link  -->
    <link rel="stylesheet" href="css/style.css">
+   
 
 </head>
-<body>
+<body class= "log_reg">
    
-<?php include 'components/user_header.php'; ?>
+
 
 <section class="form-container">
 
@@ -76,7 +77,7 @@ if(isset($_POST['submit'])){
 
 
 
-<?php include 'components/footer.php'; ?>
+
 
 <script src="js/script.js"></script>
 

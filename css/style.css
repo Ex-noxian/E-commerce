@@ -586,8 +586,22 @@ section{
    margin-right: auto;
 }
 
+.log_reg {
+   background: linear-gradient(to bottom right, #40E0D0, #FF8C00,#FF0080); /* Blue to green gradient */
+   margin: 0;
+   padding: 0;
+   font-family: Arial, sans-serif; /* Example font-family */
+ }
+.form-container {
+   display: flex;
+   justify-content: center; /* Center horizontally */
+   align-items: center;
+   height: 100vh;
+}
+
 .form-container form{
-   background-color: var(--white);
+   background: linear-gradient(to bottom right, #EFEFBB, #D4D3DD); /* Gradient background */
+   
    padding:2rem;
    border-radius: .5rem;
    border:var(--border);
@@ -1066,7 +1080,16 @@ section{
    animation: rotateLogo 4s linear infinite; /* Rotate animation */
  }
  
- 
- 
- 
+/*cursor animation */
+ .circle {
+   height: 24px;
+   width: 24px;
+   border-radius: 24px;
+   background-color: black;
+   position: fixed; 
+   top: 0;
+   left: 0;
+   pointer-events: none;
+   z-index: 99999999; 
+ }
  

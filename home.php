@@ -5,6 +5,7 @@
 
 include 'components/connect.php';
 
+
 session_start();
 
 if(isset($_SESSION['user_id'])){
@@ -38,9 +39,12 @@ include 'components/wishlist_cart.php';
    
 <?php include 'components/user_header.php'; ?>
 
+
 <div class="home-bg">
 
 <section class="home">
+
+<?php include 'components/circle.php'; ?>
 
    <div class="swiper home-slider">
    
@@ -202,7 +206,7 @@ include 'components/wishlist_cart.php';
 <script src="https://unpkg.com/swiper@8/swiper-bundle.min.js"></script>
 
 <script src="js/script.js"></script>
-
+<script src="js/circle_script.js"></script>
 <script>
 
 var swiper = new Swiper(".home-slider", {
