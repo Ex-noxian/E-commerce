@@ -7,7 +7,7 @@ session_start();
 $admin_id = $_SESSION['admin_id'];
 
 if(!isset($admin_id)){
-   header('location:admin_login.php');
+   header('location:login.php');
 };
 
 if(isset($_POST['add_product'])){
@@ -16,9 +16,12 @@ if(isset($_POST['add_product'])){
    $name = filter_var($name, FILTER_SANITIZE_STRING);
    $price = $_POST['price'];
    $price = filter_var($price, FILTER_SANITIZE_STRING);
+   $category = $_POST['category'];
+   $category = filter_var($category, FILTER_SANITIZE_STRING);
    $details = $_POST['details'];
    $details = filter_var($details, FILTER_SANITIZE_STRING);
 
+ 
    $image_01 = $_FILES['image_01']['name'];
    $image_01 = filter_var($image_01, FILTER_SANITIZE_STRING);
    $image_size_01 = $_FILES['image_01']['size'];
@@ -44,9 +47,11 @@ if(isset($_POST['add_product'])){
       $message[] = 'product name already exist!';
    }else{
 
-      $insert_products = $conn->prepare("INSERT INTO `products`(name, details, price, image_01, image_02, image_03) VALUES(?,?,?,?,?,?)");
-      $insert_products->execute([$name, $details, $price, $image_01, $image_02, $image_03]);
+      $insert_products = $conn->prepare("INSERT INTO `products`(name, details, price, category, image_01, image_02, image_03) VALUES(?,?,?,?,?,?,?)");
+$insert_products->execute([$name, $details, $price, $category, $image_01, $image_02, $image_03]);
 
+
+   
       if($insert_products){
          if($image_size_01 > 2000000 OR $image_size_02 > 2000000 OR $image_size_03 > 2000000){
             $message[] = 'image size is too large!';
@@ -59,7 +64,7 @@ if(isset($_POST['add_product'])){
 
       }
 
-   }  
+   }
 
 };
 
@@ -72,15 +77,16 @@ if(isset($_GET['delete'])){
    unlink('../uploaded_img/'.$fetch_delete_image['image_01']);
    unlink('../uploaded_img/'.$fetch_delete_image['image_02']);
    unlink('../uploaded_img/'.$fetch_delete_image['image_03']);
-   $delete_product = $conn->prepare("DELETE FROM `products` WHERE id = ?");
-   $delete_product->execute([$delete_id]);
-   $delete_cart = $conn->prepare("DELETE FROM `cart` WHERE pid = ?");
-   $delete_cart->execute([$delete_id]);
+   $delete_products = $conn->prepare("DELETE FROM `products` WHERE id = ?");
+   $delete_products->execute([$delete_id]);
    $delete_wishlist = $conn->prepare("DELETE FROM `wishlist` WHERE pid = ?");
    $delete_wishlist->execute([$delete_id]);
+   $delete_cart = $conn->prepare("DELETE FROM `cart` WHERE pid = ?");
+   $delete_cart->execute([$delete_id]);
    header('location:products.php');
-}
 
+
+}
 
 ?>
 
@@ -92,30 +98,38 @@ if(isset($_GET['delete'])){
    <meta name="viewport" content="width=device-width, initial-scale=1.0">
    <title>products</title>
 
+   <!-- font awesome cdn link  -->
    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
 
+   <!-- custom css file link  -->
    <link rel="stylesheet" href="../css/admin_style.css">
 
 </head>
 <body>
-
+   
 <?php include '../components/admin_header.php'; ?>
 
 <section class="add-products">
 
-   <h1 class="heading">add product</h1>
+   <h1 class="title">add new product</h1>
 
-   <form action="" method="post" enctype="multipart/form-data">
+   <form action="" method="POST" enctype="multipart/form-data">
       <div class="flex">
          <div class="inputBox">
-            <span>product name (required)</span>
-            <input type="text" class="box" required maxlength="100" placeholder="enter product name" name="name">
-         </div>
+         <input type="text" name="name" class="box" required placeholder="enter product name">
+         <select name="category" class="box" required>
+            <option value="" selected disabled>select category</option>
+               <option value="Cloth">Cloth</option>
+               <option value="Electronics">Electronics</option>
+               <option value="Games">Games</option>
+               <option value="Furniture">Furniture</option>
+         </select>
          <div class="inputBox">
             <span>product price (required)</span>
             <input type="number" min="0" class="box" required max="9999999999" placeholder="enter product price" onkeypress="if(this.value.length == 10) return false;" name="price">
          </div>
-        <div class="inputBox">
+         </div>
+         <div class="inputBox">
             <span>image 01 (required)</span>
             <input type="file" name="image_01" accept="image/jpg, image/jpeg, image/png, image/webp" class="box" required>
         </div>
@@ -127,46 +141,43 @@ if(isset($_GET['delete'])){
             <span>image 03 (required)</span>
             <input type="file" name="image_03" accept="image/jpg, image/jpeg, image/png, image/webp" class="box" required>
         </div>
-         <div class="inputBox">
-            <span>product details (required)</span>
-            <textarea name="details" placeholder="enter product details" class="box" required maxlength="500" cols="30" rows="10"></textarea>
-         </div>
       </div>
-      
-      <input type="submit" value="add product" class="btn" name="add_product">
+      <textarea name="details" class="box" required placeholder="enter product details" cols="30" rows="10"></textarea>
+      <input type="submit" class="btn" value="add product" name="add_product">
    </form>
 
 </section>
 
 <section class="show-products">
 
-   <h1 class="heading">products added</h1>
+   <h1 class="title">products added</h1>
 
    <div class="box-container">
 
    <?php
-      $select_products = $conn->prepare("SELECT * FROM `products`");
-      $select_products->execute();
-      if($select_products->rowCount() > 0){
-         while($fetch_products = $select_products->fetch(PDO::FETCH_ASSOC)){ 
+      $show_products = $conn->prepare("SELECT * FROM `products`");
+      $show_products->execute();
+      if($show_products->rowCount() > 0){
+         while($fetch_products = $show_products->fetch(PDO::FETCH_ASSOC)){  
    ?>
    <div class="box">
+      <div class="price">$<?= $fetch_products['price']; ?>/-</div>
       <img src="../uploaded_img/<?= $fetch_products['image_01']; ?>" alt="">
       <div class="name"><?= $fetch_products['name']; ?></div>
-      <div class="price">$<span><?= $fetch_products['price']; ?></span>/-</div>
-      <div class="details"><span><?= $fetch_products['details']; ?></span></div>
+      <div class="cat"><?= $fetch_products['category']; ?></div>
+      <div class="details"><?= $fetch_products['details']; ?></div>
       <div class="flex-btn">
          <a href="update_product.php?update=<?= $fetch_products['id']; ?>" class="option-btn">update</a>
          <a href="products.php?delete=<?= $fetch_products['id']; ?>" class="delete-btn" onclick="return confirm('delete this product?');">delete</a>
       </div>
    </div>
    <?php
-         }
-      }else{
-         echo '<p class="empty">no products added yet!</p>';
       }
+   }else{
+      echo '<p class="empty">now products added yet!</p>';
+   }
    ?>
-   
+
    </div>
 
 </section>
@@ -178,7 +189,10 @@ if(isset($_GET['delete'])){
 
 
 
-<script src="../js/admin_script.js"></script>
-   
+
+
+
+<script src="js/script.js"></script>
+
 </body>
 </html>

@@ -1,3 +1,4 @@
+
 <?php
 
 include 'components/connect.php';
@@ -19,6 +20,28 @@ if(isset($_POST['submit'])){
 
    $update_profile = $conn->prepare("UPDATE `users` SET name = ?, email = ? WHERE id = ?");
    $update_profile->execute([$name, $email, $user_id]);
+
+   $image = $_FILES['image']['name'];
+   $image = filter_var($image, FILTER_SANITIZE_STRING);
+   $image_size = $_FILES['image']['size'];
+   $image_tmp_name = $_FILES['image']['tmp_name'];
+   $image_folder = 'uploaded_img/'.$image;
+   $old_image = $_POST['old_image'];
+
+   if(!empty($image)){
+      if($image_size > 2000000){
+         $message[] = 'image size is too large!';
+      }else{
+         $update_image = $conn->prepare("UPDATE `users` SET image = ? WHERE id = ?");
+         $update_image->execute([$image, $user_id]);
+         if($update_image){
+            move_uploaded_file($image_tmp_name, $image_folder);
+            unlink('uploaded_img/'.$old_image);
+            $message[] = 'image updated successfully!';
+         };
+      };
+   };
+
 
    $empty_pass = 'da39a3ee5e6b4b0d3255bfef95601890afd80709';
    $prev_pass = $_POST['prev_pass'];
@@ -44,8 +67,12 @@ if(isset($_POST['submit'])){
          $message[] = 'please enter a new password!';
       }
    }
+
    
+   // ... your existing code ...
 }
+   
+
 
 ?>
 
@@ -68,20 +95,41 @@ if(isset($_POST['submit'])){
    
 <?php include 'components/user_header.php'; ?>
 
-<section class="form-container">
+<section class="update-profile">
 
-   <form action="" method="post">
-      <h3>update now</h3>
-      <input type="hidden" name="prev_pass" value="<?= $fetch_profile["password"]; ?>">
-      <input type="text" name="name" required placeholder="enter your username" maxlength="20"  class="box" value="<?= $fetch_profile["name"]; ?>">
-      <input type="email" name="email" required placeholder="enter your email" maxlength="50"  class="box" oninput="this.value = this.value.replace(/\s/g, '')" value="<?= $fetch_profile["email"]; ?>">
-      <input type="password" name="old_pass" placeholder="enter your old password" maxlength="20"  class="box" oninput="this.value = this.value.replace(/\s/g, '')">
-      <input type="password" name="new_pass" placeholder="enter your new password" maxlength="20"  class="box" oninput="this.value = this.value.replace(/\s/g, '')">
-      <input type="password" name="cpass" placeholder="confirm your new password" maxlength="20"  class="box" oninput="this.value = this.value.replace(/\s/g, '')">
-      <input type="submit" value="update now" class="btn" name="submit">
+   <h1 class="title">update profile</h1>
+
+   <form action="" method="POST" enctype="multipart/form-data">
+      <img src="uploaded_img/<?= $fetch_profile['image']; ?>" alt="">
+      <div class="flex">
+         <div class="inputBox">
+            <span>username :</span>
+            <input type="text" name="name" value="<?= $fetch_profile['name']; ?>" placeholder="update username" required class="box">
+            <span>email :</span>
+            <input type="email" name="email" value="<?= $fetch_profile['email']; ?>" placeholder="update email" required class="box">
+            <span>update pic :</span>
+            <input type="file" name="image" accept="image/jpg, image/jpeg, image/png" class="box">
+            <input type="hidden" name="old_image" value="<?= $fetch_profile['image']; ?>">
+         </div>
+         <div class="inputBox">
+            <input type="hidden" name="old_pass" value="<?= $fetch_profile['password']; ?>">
+            <span>old password :</span>
+            <input type="password" name="update_pass" placeholder="enter previous password" class="box">
+            <span>new password :</span>
+            <input type="password" name="new_pass" placeholder="enter new password" class="box">
+            <span>confirm password :</span>
+            <input type="password" name="confirm_pass" placeholder="confirm new password" class="box">
+         </div>
+      </div>
+      <div class="flex-btn">
+         <input type="submit" class="btn" value="update profile" name="update_profile">
+         <a href="home.php" class="option-btn">go back</a>
+      </div>
    </form>
 
 </section>
+
+
 
 
 

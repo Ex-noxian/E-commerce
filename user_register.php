@@ -21,6 +21,12 @@ if(isset($_POST['submit'])){
    $cpass = sha1($_POST['cpass']);
    $cpass = filter_var($cpass, FILTER_SANITIZE_STRING);
 
+   $image = $_FILES['image']['name'];
+   $image = filter_var($image, FILTER_SANITIZE_STRING);
+   $image_size = $_FILES['image']['size'];
+   $image_tmp_name = $_FILES['image']['tmp_name'];
+   $image_folder = 'uploaded_img/'.$image;
+
    $select_user = $conn->prepare("SELECT * FROM `users` WHERE email = ?");
    $select_user->execute([$email,]);
    $row = $select_user->fetch(PDO::FETCH_ASSOC);
@@ -34,7 +40,21 @@ if(isset($_POST['submit'])){
          $insert_user = $conn->prepare("INSERT INTO `users`(name, email, password) VALUES(?,?,?)");
          $insert_user->execute([$name, $email, $cpass]);
          $message[] = 'registered successfully, login now please!';
+      
+         if($insert_user){
+            if($image_size > 2000000){
+               $message[] = 'image size is too large!';
+            }else{
+               move_uploaded_file($image_tmp_name, $image_folder);
+               $message[] = 'registered successfully!';
+               $update_image = $conn->prepare("UPDATE `users` SET image = ? WHERE email = ?");
+               $update_image->execute([$image, $email]);
+       
+               header('location:user_login.php');
+            }
+         }
       }
+
    }
 
 }
@@ -62,12 +82,13 @@ if(isset($_POST['submit'])){
 
 <section class="form-container">
 
-   <form action="" method="post">
+<form action="" enctype="multipart/form-data" method="POST">
       <h3>register now</h3>
       <input type="text" name="name" required placeholder="enter your username" maxlength="20"  class="box">
       <input type="email" name="email" required placeholder="enter your email" maxlength="50"  class="box" oninput="this.value = this.value.replace(/\s/g, '')">
       <input type="password" name="pass" required placeholder="enter your password" maxlength="20"  class="box" oninput="this.value = this.value.replace(/\s/g, '')">
       <input type="password" name="cpass" required placeholder="confirm your password" maxlength="20"  class="box" oninput="this.value = this.value.replace(/\s/g, '')">
+      <input type="file" name="image" class="box" required accept="image/jpg, image/jpeg, image/png" maxlength="20">
       <input type="submit" value="register now" class="btn" name="submit">
       <p>already have an account?</p>
       <a href="user_login.php" class="option-btn">login now</a>

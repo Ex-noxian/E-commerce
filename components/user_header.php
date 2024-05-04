@@ -32,7 +32,11 @@
       </nav>
 
       <div class="icons">
-         <?php
+      <button class="js__dark-mode-toggle dark-mode-toggle" type="button">
+  <span class="dark-mode-toggle__icon"></span>
+  <span class="dark-mode-toggle__text hidden--visually">dark mode</span>
+</button>
+        <?php
             $count_wishlist_items = $conn->prepare("SELECT * FROM `wishlist` WHERE user_id = ?");
             $count_wishlist_items->execute([$user_id]);
             $total_wishlist_counts = $count_wishlist_items->rowCount();
@@ -46,6 +50,7 @@
          <a href="wishlist.php"><i class="fas fa-heart"></i><span>(<?= $total_wishlist_counts; ?>)</span></a>
          <a href="cart.php"><i class="fas fa-shopping-cart"></i><span>(<?= $total_cart_counts; ?>)</span></a>
          <div id="user-btn" class="fas fa-user"></div>
+        
       </div>
 
       <div class="profile">
@@ -55,6 +60,7 @@
             if($select_profile->rowCount() > 0){
             $fetch_profile = $select_profile->fetch(PDO::FETCH_ASSOC);
          ?>
+         <img src="uploaded_img/<?= $fetch_profile['image']; ?>" alt="">
          <p><?= $fetch_profile["name"]; ?></p>
          <a href="update_user.php" class="btn">update profile</a>
          <div class="flex-btn">
@@ -78,5 +84,5 @@
       </div>
 
    </section>
-
+   <script src="js/dark_script.js"></script>
 </header>

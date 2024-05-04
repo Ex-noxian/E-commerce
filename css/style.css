@@ -4,9 +4,9 @@
    --main-color:#2980b9;
    --orange:#f39c12;
    --red:#e74c3c;
-   --black:#333;
+   --black:#000000;
    --white:#fff;
-   --light-color:#666;
+   --light-color:#1c97da;
    --light-bg:#eee;
    --border:.2rem solid var(--black);
    --box-shadow:0 .5rem 1rem rgba(0,0,0,.1);
@@ -188,12 +188,7 @@ section{
 }
 
 
-.header .flex .icons > *{
-   margin-left: 1rem;
-   font-size: 2.5rem;
-   cursor: pointer;
-   color:var(--black);
-}
+
 
 .header .flex .icons > *:hover{
    color:var(--main-color);
@@ -206,19 +201,27 @@ section{
 .header .flex .profile{
    position: absolute;
    top:120%; right:2rem;
-   background-color: var(--white);
-   border-radius: .5rem;
    box-shadow: var(--box-shadow);
    border:var(--border);
+   border-radius: .5rem;
    padding:2rem;
-   width: 30rem;
-   padding-top: 1.2rem;
+   text-align: center;
+   background-color: var(--white);
+   width: 33rem;
    display: none;
-   animation:fadeIn .2s linear;
+   animation: fadeIn .2s linear;
 }
 
 .header .flex .profile.active{
    display: inline-block;
+}
+
+.header .flex .profile img{
+   height: 15rem;
+   width: 15rem;
+   margin-bottom: 1rem;
+   border-radius: 50%;
+   object-fit: cover;
 }
 
 .header .flex .profile p{
@@ -297,9 +300,6 @@ section{
    background-color: var(--black);
 }
 
-.category .slide:hover img{
-   filter:invert();
-}
 
 .category .slide:hover h3{
    color:var(--white);
@@ -1092,4 +1092,281 @@ section{
    pointer-events: none;
    z-index: 99999999; 
  }
+
+ /*update profile*/
+
+ .title{
+   text-align: center;
+   margin-bottom: 2rem;
+   text-transform: uppercase;
+   color:var(--black);
+   font-size: 3.5rem;
+}
+
+ .update-profile form{
+   max-width: 70rem;
+   margin: 0 auto;
+   background-color: var(--white);
+   box-shadow: var(--box-shadow);
+   border:var(--border);
+   border-radius: .5rem;
+   padding:2rem;
+   text-align: center;
+}
+
+.update-profile form .flex{
+   display: flex;
+   gap:1.5rem;
+   justify-content: space-between;
+}
+
+.update-profile form img{
+   height: 20rem;
+   width: 20rem;
+   margin-bottom: 1rem;
+   border-radius: 50%;
+   object-fit: cover;
+}
+
+.update-profile form .inputBox{
+   text-align: left;
+   width: 49%;
+}
+
+.update-profile form .inputBox span{
+   display: block;
+   padding-top: 1rem;
+   font-size: 1.8rem;
+   color:var(--light-color);
+}
+
+.update-profile form .inputBox .box{
+   width: 100%;
+   padding:1.2rem 1.4rem;
+   font-size: 1.8rem;
+   color:var(--black);
+   border:var(--border);
+   border-radius: .5rem;
+   margin:1rem 0;
+   background-color: var(--light-bg);
+}
+/*finish update profile*/
+/* styles for dark mode */
+:root {
+   --white: #fdfdfa;
+   --black: #4d4d4d;
+   --primary: #00b7c6;
+   --grey--dark: #aca79a;
+ }
+
+ :root[data-theme="dark"] {
+   --white: #4d4d4d;
+   --black: #efeeeb;
+   --primary: #ff851b;
+ }
+
+ body {
+   font-size: 1rem;
+   color: var(--black);
+   background: var(--white);
+   font-family: monospace;
+   line-height: 1.7;
+   padding: 4rem;
+   position: relative; /* Add relative positioning to the body */
+ }
+ .header .flex .icons {
+   display: flex;
+   align-items: center;
+   position: relative; /* Ensure the container is positioned relatively */
+}
+
+.header .flex .icons .dark-mode-toggle {
+   order: -1; /* Move dark mode toggle to the beginning */
+   margin-right: 1rem; /* Adjust margin to create space between dark mode toggle and search button */
+   font-size: 2.5rem;
+   cursor: pointer;
+   color: var(--black);
+   border: .2rem solid var(--grey--dark);
+   border-radius: .4rem;
+   width: 4rem;
+   height: 4rem;
+   display: inline-block;
+   display: flex;
+   align-items: center;
+   justify-content: center;
+   background: none;
+   border: none;
+   border-radius: 0;
+   overflow: hidden;
+}
+
+.header .flex .icons > * {
+   margin-left: 1.2rem; /* Maintain margin between icons */
+   font-size: 2.5rem;
+   cursor: pointer;
+   color: var(--black);
+}
+
+
+
  
+ .dark-mode-toggle:focus {
+   outline: none;
+   border-color: var(--primary);
+ }
+ 
+ :root[data-theme="dark"] .dark-mode-toggle__text:before {
+   content: "deactivate ";
+ }
+ 
+ :root[data-theme="light"] .dark-mode-toggle__text:before {
+   content: "activate ";
+ }
+ 
+ .dark-mode-toggle__icon {
+   display: block;
+   background: var(--grey--dark);
+   border-radius: 50%;
+   width: 2rem;
+   height: 2rem;
+   position: relative;
+   transition: width 0.3s, height 0.3s;
+   z-index: 1;
+   transform: rotate(-20deg);
+ }
+ 
+ .dark-mode-toggle__icon:before {
+   z-index: 0;
+   content: "";
+   position: absolute;
+   display: block;
+   border-right: none;
+   border-radius: 50%;
+   width: 2.4rem;
+   height: 2.4rem;
+   top: 50%;
+   left: 50%;
+   transition: opacity 0.3s, background-image 03s;
+   opacity: 0;
+   transform: translate(-50%, -50%) rotate(0deg);
+   animation: spin__rays 4s linear infinite;
+   background-image: linear-gradient(
+       0deg,
+       transparent 46%,
+       var(--grey--dark) 46%,
+       var(--grey--dark) 54%,
+       transparent 54%
+     ),
+     linear-gradient(
+       90deg,
+       transparent 46%,
+       var(--grey--dark) 46%,
+       var(--grey--dark) 54%,
+       transparent 54%
+     ),
+     linear-gradient(
+       45deg,
+       transparent 47%,
+       var(--grey--dark) 47%,
+       var(--grey--dark) 53%,
+       transparent 53%
+     ),
+     linear-gradient(
+       135deg,
+       transparent 47%,
+       var(--grey--dark) 47%,
+       var(--grey--dark) 53%,
+       transparent 53%
+     );
+ }
+ 
+ .dark-mode-toggle__icon:after {
+   content: "";
+   position: absolute;
+   display: block;
+   background: var(--white);
+   border-radius: 0.7rem;
+   width: 1.4rem;
+   height: 1.4rem;
+   top: 50%;
+   left: 200%;
+   transform: translateY(-50%);
+   transition: left 0.3s;
+ }
+ 
+ .dark-mode-toggle:hover .dark-mode-toggle__icon {
+   background: var(--primary);
+ }
+ .dark-mode-toggle:hover .dark-mode-toggle__icon:before {
+   background-image: linear-gradient(
+       0deg,
+       transparent 47%,
+       var(--primary) 47%,
+       var(--primary) 53%,
+       transparent 53%
+     ),
+     linear-gradient(
+       90deg,
+       transparent 47%,
+       var(--primary) 47%,
+       var(--primary) 53%,
+       transparent 53%
+     ),
+     linear-gradient(
+       45deg,
+       transparent 48%,
+       var(--primary) 48%,
+       var(--primary) 52%,
+       transparent 52%
+     ),
+     linear-gradient(
+       135deg,
+       transparent 48%,
+       var(--primary) 48%,
+       var(--primary) 52%,
+       transparent 52%
+     );
+ }
+ 
+ :root[data-theme="light"] .dark-mode-toggle__icon:after {
+   left: 40%;
+ }
+ :root[data-theme="dark"] .dark-mode-toggle__icon {
+   width: 1.6rem;
+   height: 1.6rem;
+ }
+ :root[data-theme="dark"] .dark-mode-toggle__icon:before {
+   opacity: 1;
+ }
+ 
+ @keyframes spin__rays {
+   from {
+     transform: translate(-50%, -50%) rotate(0deg);
+   }
+   to {
+     transform: translate(-50%, -50%) rotate(90deg);
+   }
+ }
+ 
+ /* Hide only visually, but have it available for screenreaders */
+ .hidden--visually {
+   border: 0;
+   clip: rect(0 0 0 0);
+   height: 1px;
+   margin: -1px;
+   overflow: hidden;
+   padding: 0;
+   position: absolute;
+   width: 1px;
+ }
+ 
+/* banner */
+.banner {
+   text-align: center;
+   margin-top: 20px;
+}
+
+.banner img {
+   max-width: 100%;
+}
+
