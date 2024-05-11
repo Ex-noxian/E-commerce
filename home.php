@@ -37,11 +37,11 @@ include 'components/wishlist_cart.php';
 <?php include 'components/user_header.php'; ?>
 
 
-<div class="home-bg">
+
 
 <section class="home">
 
-<?php include 'components/circle.php'; ?>
+
 
 
 
@@ -50,39 +50,31 @@ include 'components/wishlist_cart.php';
    <div class="swiper-wrapper">
 
       <div class="swiper-slide slide">
+      <a href="category.php?category=Cloth">
          <div class="image">
             <img src="images/home-img-1.png" alt="">
+            <div class="arrow arrow-left"></div>
+                  <div class="arrow arrow-right"></div>
+                  
          </div>
-         <div class="content">
-            <span>upto 50% off</span>
-            <h3>latest smartphones</h3>
-            <a href="shop.php" class="btn">shop now</a>
-         </div>
+         
       </div>
 
       <div class="swiper-slide slide">
+      <a href="shop.php">
          <div class="image">
             <img src="images/home-img-2.png" alt="">
          </div>
-         <div class="content">
-            <span>upto 50% off</span>
-            <h3>latest watches</h3>
-            <a href="shop.php" class="btn">shop now</a>
-         </div>
+         
       </div>
 
       <div class="swiper-slide slide">
+      <a href="shop.php">
          <div class="image">
             <img src="images/home-img-3.png" alt="">
          </div>
-         <div class="content">
-            <span>upto 50% off</span>
-            <h3>latest headsets</h3>
-            <a href="shop.php" class="btn">shop now</a>
-         </div>
+         
       </div>
-
-   </div>
 
       <div class="swiper-pagination"></div>
 
@@ -90,11 +82,14 @@ include 'components/wishlist_cart.php';
 
 </section>
 
-</div>
+
 
 <section class="category">
 
-   <h1 class="heading">shop by category</h1>
+   <h1 class="heading">
+   <i class="fa-solid fa-shop" style="color: #00b850;"></i>
+      shop by category
+   </h1>
 
    <div class="swiper category-slider">
 
@@ -152,10 +147,60 @@ include 'components/wishlist_cart.php';
    </div>
 
 </section>
-
+<div class="wrapper">
+        <div class="container">
+            <input type="radio" name="slide" id="c1" checked>
+            <label for="c1" class="card">
+                <div class="row">
+                    <div class="icon">1</div>
+                    <div class="description">
+                        <h4>Winter</h4>
+                        <p>Winter has so much to offer -
+                         creative activities</p>
+                    </div>
+                </div>
+            </label>
+            <input type="radio" name="slide" id="c2" >
+            <label for="c2" class="card">
+                <div class="row">
+                    <div class="icon">2</div>
+                    <div class="description">
+                        <h4>Digital Technology</h4>
+                        <p>Gets better every day -
+                         stay tuned</p>
+                    </div>
+                </div>
+            </label>
+            <input type="radio" name="slide" id="c3" >
+            <label for="c3" class="card">
+                <div class="row">
+                    <div class="icon">3</div>
+                    <div class="description">
+                        <h4>Globalization</h4>
+                        <p>Help people all over the world</p>
+                    </div>
+                </div>
+            </label>
+            <input type="radio" name="slide" id="c4" >
+            <label for="c4" class="card">
+                <div class="row">
+                    <div class="icon">4</div>
+                    <div class="description">
+                        <h4>New technologies</h4>
+                        <p>Space engineering becomes
+                         more and more advanced</p>
+                    </div>
+                </div>
+            </label>
+        </div>
+    </div>
 <section class="home-products">
 
-   <h1 class="heading">latest products</h1>
+<h1 class="heading">
+  
+   <i class="fa-solid fa-fire" style="color: #ee2020;"></i>
+   Popular Products
+</h1>
 
    <div class="swiper products-slider">
 
@@ -198,13 +243,14 @@ include 'components/wishlist_cart.php';
 </section>
 
 
-<div class="banner">
-   <img src="images/home.png" alt="Banner">
-</div>
+
 
 <section class="home-products">
 
-   <h1 class="heading">only for you</h1>
+   <h1 class="heading">
+   <i class="fa-solid fa-arrow-trend-up" style="color: #FFD43B;"></i>
+    Trending Now
+   </h1>
 
    <div class="swiper products-slider">
 
@@ -256,7 +302,7 @@ include 'components/wishlist_cart.php';
 <script src="https://unpkg.com/swiper@8/swiper-bundle.min.js"></script>
 
 <script src="js/script.js"></script>
-<script src="js/circle_script.js"></script>
+
 
 <script>
 
