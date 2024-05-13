@@ -13,6 +13,7 @@ if(isset($_SESSION['user_id'])){
 
 include 'components/wishlist_cart.php';
 
+include 'components/background.php';
 ?>
 
 <!DOCTYPE html>
@@ -30,6 +31,8 @@ include 'components/wishlist_cart.php';
 
    <!-- custom css file link  -->
    <link rel="stylesheet" href="css/style.css">
+
+
 
 </head>
 <body>
@@ -53,8 +56,7 @@ include 'components/wishlist_cart.php';
       <a href="category.php?category=Cloth">
          <div class="image">
             <img src="images/home-img-1.png" alt="">
-            <div class="arrow arrow-left"></div>
-                  <div class="arrow arrow-right"></div>
+            
                   
          </div>
          
@@ -147,53 +149,25 @@ include 'components/wishlist_cart.php';
    </div>
 
 </section>
-<div class="wrapper">
-        <div class="container">
-            <input type="radio" name="slide" id="c1" checked>
-            <label for="c1" class="card">
-                <div class="row">
-                    <div class="icon">1</div>
-                    <div class="description">
-                        <h4>Winter</h4>
-                        <p>Winter has so much to offer -
-                         creative activities</p>
-                    </div>
-                </div>
-            </label>
-            <input type="radio" name="slide" id="c2" >
-            <label for="c2" class="card">
-                <div class="row">
-                    <div class="icon">2</div>
-                    <div class="description">
-                        <h4>Digital Technology</h4>
-                        <p>Gets better every day -
-                         stay tuned</p>
-                    </div>
-                </div>
-            </label>
-            <input type="radio" name="slide" id="c3" >
-            <label for="c3" class="card">
-                <div class="row">
-                    <div class="icon">3</div>
-                    <div class="description">
-                        <h4>Globalization</h4>
-                        <p>Help people all over the world</p>
-                    </div>
-                </div>
-            </label>
-            <input type="radio" name="slide" id="c4" >
-            <label for="c4" class="card">
-                <div class="row">
-                    <div class="icon">4</div>
-                    <div class="description">
-                        <h4>New technologies</h4>
-                        <p>Space engineering becomes
-                         more and more advanced</p>
-                    </div>
-                </div>
-            </label>
+
+<div class="banner-container">
+
+    <div class="banner">
+        <div class="shoe">
+            <img src="images/shoe.png" alt="">
+        </div>
+        <div class="content">
+            <span>upto</span>
+            <h3>50% 0ff</h3>
+            <p>offer ends after 5 days</p>
+            <a href="#" class="btn">view offer</a>
+        </div>
+        <div class="women">
+            <img src="images/women.png" alt="">
         </div>
     </div>
+
+</div>
 <section class="home-products">
 
 <h1 class="heading">
@@ -243,6 +217,32 @@ include 'components/wishlist_cart.php';
 </section>
 
 
+<div class="gallery">
+  <figure class="card">
+      <img
+           src="images/img1.jpg"
+           alt=""
+           >
+    </figure>
+    <figure class="card">
+      <img
+           src="images/img2.png"
+           alt=""
+           >
+    </figure>
+    <figure class="card">
+      <img
+           src="images/game-1.jpg"
+           alt=""
+           >
+           </figure>
+    <figure class="card">
+      <img
+           src="images/img-4.png"
+           alt=""
+           >
+    </figure>       
+</div>
 
 
 <section class="home-products">

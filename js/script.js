@@ -25,3 +25,8 @@ subImages.forEach(images =>{
       mainImage.src = src;
    }
 });
+document.getElementById('search_box').addEventListener('input', function() {
+   document.getElementById('hidden_search_box').value = this.innerText;
+});
+/*background*/
+

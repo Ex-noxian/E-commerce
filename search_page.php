@@ -26,8 +26,11 @@ include 'components/wishlist_cart.php';
    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
 
    <!-- custom css file link  -->
-   <link rel="stylesheet" href="css/style.css">
-
+   <link rel="stylesheet" href="css/style.css"> 
+  
+<style>
+   
+</style>
 </head>
 <body>
    
@@ -35,7 +38,7 @@ include 'components/wishlist_cart.php';
 
 
 
-<section class="products" style="padding-top: 0; min-height:100vh;">
+<section class="search" style="padding-top: 0; min-height:100vh;">
 
    <div class="box-container">
 
@@ -47,6 +50,10 @@ include 'components/wishlist_cart.php';
      if($select_products->rowCount() > 0){
       while($fetch_product = $select_products->fetch(PDO::FETCH_ASSOC)){
    ?>
+     <h1 class="heading">
+   <i class="fa-solid fa-shop" style="color: #00b850;"></i>
+       Product
+   </h1>
    <form action="" method="post" class="box">
       <input type="hidden" name="pid" value="<?= $fetch_product['id']; ?>">
       <input type="hidden" name="name" value="<?= $fetch_product['name']; ?>">
@@ -85,7 +92,7 @@ include 'components/wishlist_cart.php';
 
 
 
-<?php include 'components/footer.php'; ?>
+
 
 <script src="js/script.js"></script>
 
